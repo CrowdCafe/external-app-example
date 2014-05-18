@@ -2,6 +2,7 @@
 	text-align: center;
 }
 .image-container .image{
+	float:left;
 	max-width: 25%;
 	display: inline-block;
 	margin-left:10px;

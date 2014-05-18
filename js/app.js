@@ -4,12 +4,14 @@ $(document).ready(function(){
 	
 	$('#image-submit').click(function(){
 		var image_url = $('#image-url').val();
+		var button = $(this);
+		button.button('loading');
 		if (image_url && image_url.length > 0){
 			$.post('php/app.php',{
 				'image-url': image_url
 			},function(data){
-				console.log(data);
-				alert('done');
+				$('#image-url').val('');
+				button.button('reset');
 			});
 		}
 		return false;
@@ -18,9 +20,8 @@ $(document).ready(function(){
 	var myRootRef = new Firebase('https://image-tagging-app.firebaseio.com/images');
 	myRootRef.on('child_added',function(snapshot){
 		var image = snapshot.val();
-		console.log(image);
 		var data = {'id':snapshot.name(),'url':image.url,'tags':image.tags};
-		$('.image-container').append(image_template(data));
+		$('.image-container').prepend(image_template(data));
 	});
 
 	myRootRef.on('child_changed',function(snapshot){
